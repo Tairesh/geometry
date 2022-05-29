@@ -1,0 +1,13 @@
+[package]
+name = "geometry"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+vek = { version = "0.15.4" }
+rand = { version = "0.8.5", optional = true }
+serde = { version = "1.0.137", optional = true }
+
+[features]
+rand = ["dep:rand"]
+serde = ["dep:serde"]
