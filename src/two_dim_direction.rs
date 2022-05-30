@@ -2,14 +2,14 @@ use std::convert::TryFrom;
 
 use super::Direction;
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum TwoDimDirection {
     East,
     West,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum ConvertError {
     North,
     South,
@@ -41,11 +41,19 @@ mod tests {
     use super::{ConvertError, Direction, TwoDimDirection};
 
     #[test]
-    fn to_two_dim() {
+    fn south_east_to_two_dim() {
         let dir: TwoDimDirection = Direction::SouthEast.try_into().unwrap();
         assert!(matches!(dir, TwoDimDirection::East));
+    }
+
+    #[test]
+    fn west_to_two_dim() {
         let dir: TwoDimDirection = Direction::West.try_into().unwrap();
         assert!(matches!(dir, TwoDimDirection::West));
+    }
+
+    #[test]
+    fn north_to_two_dim() {
         let dir = TwoDimDirection::try_from(Direction::North);
         assert!(matches!(dir, Err(ConvertError::North)));
     }

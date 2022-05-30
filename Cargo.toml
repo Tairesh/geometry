@@ -9,5 +9,6 @@ rand = { version = "0.8.5", optional = true }
 serde = { version = "1.0.137", optional = true }
 
 [features]
+default = ["rand", "serde"]
 rand = ["dep:rand"]
 serde = ["dep:serde"]

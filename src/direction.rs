@@ -1,4 +1,4 @@
-use std::cmp::Ordering;
+use std::cmp::Ordering::{Equal, Greater, Less};
 
 use super::{Point, Vec2};
 
@@ -25,7 +25,7 @@ pub const DIR9: [Direction; 9] = [
     Direction::NorthEast,
 ];
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Direction {
     Here,
@@ -42,23 +42,16 @@ pub enum Direction {
 impl Direction {
     #[must_use]
     pub fn from_delta(dx: i32, dy: i32) -> Self {
-        let zero = 0;
-        match dx.cmp(&zero) {
-            Ordering::Less => match dy.cmp(&zero) {
-                Ordering::Less => Direction::NorthWest,
-                Ordering::Equal => Direction::West,
-                Ordering::Greater => Direction::SouthWest,
-            },
-            Ordering::Equal => match dy.cmp(&zero) {
-                Ordering::Less => Direction::North,
-                Ordering::Equal => Direction::Here,
-                Ordering::Greater => Direction::South,
-            },
-            Ordering::Greater => match dy.cmp(&zero) {
-                Ordering::Less => Direction::NorthEast,
-                Ordering::Equal => Direction::East,
-                Ordering::Greater => Direction::SouthEast,
-            },
+        match (dx.cmp(&0), dy.cmp(&0)) {
+            (Less, Less) => Direction::NorthWest,
+            (Less, Equal) => Direction::West,
+            (Less, Greater) => Direction::SouthWest,
+            (Equal, Less) => Direction::North,
+            (Equal, Equal) => Direction::Here,
+            (Equal, Greater) => Direction::South,
+            (Greater, Less) => Direction::NorthEast,
+            (Greater, Equal) => Direction::East,
+            (Greater, Greater) => Direction::SouthEast,
         }
     }
 
@@ -82,7 +75,7 @@ impl Direction {
 
     #[must_use]
     pub fn is_here(self) -> bool {
-        matches!(self, Direction::Here)
+        self == Direction::Here
     }
 }
 

@@ -1,4 +1,5 @@
-use std::ops::{Add, AddAssign, Mul, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
+use vek::num_traits::Zero;
 
 use super::{Direction, Vec2};
 
@@ -67,6 +68,16 @@ impl Point {
 impl Default for Point {
     fn default() -> Self {
         Self::new(0, 0)
+    }
+}
+
+impl Zero for Point {
+    fn zero() -> Self {
+        Self::default()
+    }
+
+    fn is_zero(&self) -> bool {
+        self == &Self::zero()
     }
 }
 
@@ -235,6 +246,42 @@ impl Mul<Vec2> for Point {
     }
 }
 
+impl MulAssign<i32> for Point {
+    fn mul_assign(&mut self, rhs: i32) {
+        *self = *self * rhs;
+    }
+}
+
+impl MulAssign<(i32, i32)> for Point {
+    fn mul_assign(&mut self, rhs: (i32, i32)) {
+        *self = *self * rhs;
+    }
+}
+
+impl MulAssign<f32> for Point {
+    fn mul_assign(&mut self, rhs: f32) {
+        *self = *self * rhs;
+    }
+}
+
+impl MulAssign<(f32, f32)> for Point {
+    fn mul_assign(&mut self, rhs: (f32, f32)) {
+        *self = *self * rhs;
+    }
+}
+
+impl MulAssign<Point> for Point {
+    fn mul_assign(&mut self, rhs: Point) {
+        *self = *self * rhs;
+    }
+}
+
+impl MulAssign<Vec2> for Point {
+    fn mul_assign(&mut self, rhs: Vec2) {
+        *self = *self * rhs;
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::{Direction, Point, Vec2};
@@ -283,5 +330,18 @@ mod tests {
         let pt2 = Point::new(3, 4);
         assert_eq!(8, pt.square_distance(pt2));
         assert!(f64::abs(pt.distance(pt2) - 2.828_427_124_746_190_3) < f64::EPSILON);
+    }
+
+    #[test]
+    fn mul_assign() {
+        let mut pt = Point::new(1, 2);
+        pt *= (1.5, 2.0);
+        assert_eq!(2, pt.x);
+        assert_eq!(4, pt.y);
+
+        let mut pt = Point::new(1, 2);
+        pt *= Vec2::new(1.5, 2.0);
+        assert_eq!(2, pt.x);
+        assert_eq!(4, pt.y);
     }
 }
