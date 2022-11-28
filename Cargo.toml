@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-vek = { version = "0.15.4" }
+vek = { version = "0.15.9" }
 rand = { version = "0.8.5", optional = true }
 serde = { version = "1.0.145", optional = true }
 
