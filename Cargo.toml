@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 vek = { version = "0.15.9" }
 rand = { version = "0.8.5", optional = true }
-serde = { version = "1.0.148", optional = true }
+serde = { version = "1.0.149", optional = true }
 
 [features]
 default = ["rand", "serde"]
