@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 use vek::num_traits::Zero;
 
 use super::{Direction, Vec2};
@@ -67,13 +67,13 @@ impl Point {
 
 impl Default for Point {
     fn default() -> Self {
-        Self::new(0, 0)
+        Self::zero()
     }
 }
 
 impl Zero for Point {
     fn zero() -> Self {
-        Self::default()
+        Self::new(0, 0)
     }
 
     fn is_zero(&self) -> bool {
@@ -121,11 +121,25 @@ impl Add<Direction> for Point {
     }
 }
 
+impl AddAssign<Direction> for Point {
+    fn add_assign(&mut self, rhs: Direction) {
+        self.x += rhs.dx();
+        self.y += rhs.dy();
+    }
+}
+
 impl Add<(i32, i32)> for Point {
     type Output = Point;
 
     fn add(self, (dx, dy): (i32, i32)) -> Self::Output {
         Self::new(self.x + dx, self.y + dy)
+    }
+}
+
+impl AddAssign<(i32, i32)> for Point {
+    fn add_assign(&mut self, (dx, dy): (i32, i32)) {
+        self.x += dx;
+        self.y += dy;
     }
 }
 
@@ -137,11 +151,24 @@ impl Add<Point> for Point {
     }
 }
 
+impl AddAssign<Point> for Point {
+    fn add_assign(&mut self, rhs: Point) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+    }
+}
+
 impl Add<Vec2> for Point {
     type Output = Point;
 
     fn add(self, rhs: Vec2) -> Self::Output {
         (Vec2::from(self) + rhs).into()
+    }
+}
+
+impl AddAssign<Vec2> for Point {
+    fn add_assign(&mut self, rhs: Vec2) {
+        *self = *self + rhs;
     }
 }
 
@@ -153,11 +180,25 @@ impl Sub<Direction> for Point {
     }
 }
 
+impl SubAssign<Direction> for Point {
+    fn sub_assign(&mut self, rhs: Direction) {
+        self.x -= rhs.dx();
+        self.y -= rhs.dy();
+    }
+}
+
 impl Sub<(i32, i32)> for Point {
     type Output = Point;
 
     fn sub(self, (dx, dy): (i32, i32)) -> Self::Output {
         Self::new(self.x - dx, self.y - dy)
+    }
+}
+
+impl SubAssign<(i32, i32)> for Point {
+    fn sub_assign(&mut self, (dx, dy): (i32, i32)) {
+        self.x -= dx;
+        self.y -= dy;
     }
 }
 
@@ -169,6 +210,13 @@ impl Sub<Point> for Point {
     }
 }
 
+impl SubAssign<Point> for Point {
+    fn sub_assign(&mut self, rhs: Point) {
+        self.x -= rhs.x;
+        self.y -= rhs.y;
+    }
+}
+
 impl Sub<Vec2> for Point {
     type Output = Point;
 
@@ -177,24 +225,9 @@ impl Sub<Vec2> for Point {
     }
 }
 
-impl AddAssign for Point {
-    fn add_assign(&mut self, rhs: Self) {
-        self.x += rhs.x;
-        self.y += rhs.y;
-    }
-}
-
-impl AddAssign<Direction> for Point {
-    fn add_assign(&mut self, dir: Direction) {
-        self.x += dir.dx();
-        self.y += dir.dy();
-    }
-}
-
-impl SubAssign for Point {
-    fn sub_assign(&mut self, rhs: Self) {
-        self.x -= rhs.x;
-        self.y -= rhs.y;
+impl SubAssign<Vec2> for Point {
+    fn sub_assign(&mut self, rhs: Vec2) {
+        *self = *self - rhs;
     }
 }
 
@@ -206,11 +239,25 @@ impl Mul<i32> for Point {
     }
 }
 
+impl MulAssign<i32> for Point {
+    fn mul_assign(&mut self, rhs: i32) {
+        self.x *= rhs;
+        self.y *= rhs;
+    }
+}
+
 impl Mul<(i32, i32)> for Point {
     type Output = Point;
 
     fn mul(self, (mx, my): (i32, i32)) -> Self::Output {
         Self::new(self.x * mx, self.y * my)
+    }
+}
+
+impl MulAssign<(i32, i32)> for Point {
+    fn mul_assign(&mut self, (mx, my): (i32, i32)) {
+        self.x *= mx;
+        self.y *= my;
     }
 }
 
@@ -222,11 +269,24 @@ impl Mul<Point> for Point {
     }
 }
 
+impl MulAssign<Point> for Point {
+    fn mul_assign(&mut self, rhs: Point) {
+        self.x *= rhs.x;
+        self.y *= rhs.y;
+    }
+}
+
 impl Mul<f32> for Point {
     type Output = Point;
 
     fn mul(self, rhs: f32) -> Self::Output {
         (Vec2::from(self) * rhs).into()
+    }
+}
+
+impl MulAssign<f32> for Point {
+    fn mul_assign(&mut self, rhs: f32) {
+        *self = *self * rhs;
     }
 }
 
@@ -238,6 +298,12 @@ impl Mul<(f32, f32)> for Point {
     }
 }
 
+impl MulAssign<(f32, f32)> for Point {
+    fn mul_assign(&mut self, (mx, my): (f32, f32)) {
+        *self = *self * Vec2::new(mx, my);
+    }
+}
+
 impl Mul<Vec2> for Point {
     type Output = Point;
 
@@ -246,39 +312,104 @@ impl Mul<Vec2> for Point {
     }
 }
 
-impl MulAssign<i32> for Point {
-    fn mul_assign(&mut self, rhs: i32) {
-        *self = *self * rhs;
-    }
-}
-
-impl MulAssign<(i32, i32)> for Point {
-    fn mul_assign(&mut self, rhs: (i32, i32)) {
-        *self = *self * rhs;
-    }
-}
-
-impl MulAssign<f32> for Point {
-    fn mul_assign(&mut self, rhs: f32) {
-        *self = *self * rhs;
-    }
-}
-
-impl MulAssign<(f32, f32)> for Point {
-    fn mul_assign(&mut self, rhs: (f32, f32)) {
-        *self = *self * rhs;
-    }
-}
-
-impl MulAssign<Point> for Point {
-    fn mul_assign(&mut self, rhs: Point) {
-        *self = *self * rhs;
-    }
-}
-
 impl MulAssign<Vec2> for Point {
     fn mul_assign(&mut self, rhs: Vec2) {
         *self = *self * rhs;
+    }
+}
+
+impl Div<i32> for Point {
+    type Output = Point;
+
+    fn div(self, rhs: i32) -> Self::Output {
+        Self::new(self.x / rhs, self.y / rhs)
+    }
+}
+
+impl DivAssign<i32> for Point {
+    fn div_assign(&mut self, rhs: i32) {
+        self.x /= rhs;
+        self.y /= rhs;
+    }
+}
+
+impl Div<(i32, i32)> for Point {
+    type Output = Point;
+
+    fn div(self, (mx, my): (i32, i32)) -> Self::Output {
+        Self::new(self.x / mx, self.y / my)
+    }
+}
+
+impl DivAssign<(i32, i32)> for Point {
+    fn div_assign(&mut self, (mx, my): (i32, i32)) {
+        self.x /= mx;
+        self.y /= my;
+    }
+}
+
+impl Div<Point> for Point {
+    type Output = Point;
+
+    fn div(self, rhs: Point) -> Self::Output {
+        Self::new(self.x / rhs.x, self.y / rhs.y)
+    }
+}
+
+impl DivAssign<Point> for Point {
+    fn div_assign(&mut self, rhs: Point) {
+        self.x /= rhs.x;
+        self.y /= rhs.y;
+    }
+}
+
+impl Div<f32> for Point {
+    type Output = Point;
+
+    fn div(self, rhs: f32) -> Self::Output {
+        (Vec2::from(self) / rhs).into()
+    }
+}
+
+impl DivAssign<f32> for Point {
+    fn div_assign(&mut self, rhs: f32) {
+        *self = *self / rhs;
+    }
+}
+
+impl Div<(f32, f32)> for Point {
+    type Output = Point;
+
+    fn div(self, (mx, my): (f32, f32)) -> Self::Output {
+        (Vec2::from(self) / Vec2::new(mx, my)).into()
+    }
+}
+
+impl DivAssign<(f32, f32)> for Point {
+    fn div_assign(&mut self, (mx, my): (f32, f32)) {
+        *self = *self / Vec2::new(mx, my);
+    }
+}
+
+impl Div<Vec2> for Point {
+    type Output = Point;
+
+    fn div(self, rhs: Vec2) -> Self::Output {
+        (Vec2::from(self) / rhs).into()
+    }
+}
+
+impl DivAssign<Vec2> for Point {
+    fn div_assign(&mut self, rhs: Vec2) {
+        *self = *self / rhs;
+    }
+}
+
+impl Neg for Point {
+    type Output = Point;
+
+    fn neg(self) -> Self::Output {
+        Self::new(-self.x, -self.y)
     }
 }
 
@@ -343,5 +474,42 @@ mod tests {
         pt *= Vec2::new(1.5, 2.0);
         assert_eq!(2, pt.x);
         assert_eq!(4, pt.y);
+    }
+
+    #[test]
+    fn div_assign() {
+        let mut pt = Point::new(1, 2);
+        pt /= (3.0, 2.0);
+        assert_eq!(0, pt.x);
+        assert_eq!(1, pt.y);
+
+        let mut pt = Point::new(1, 2);
+        pt /= Vec2::new(3.0, 2.0);
+        assert_eq!(0, pt.x);
+        assert_eq!(1, pt.y);
+    }
+
+    #[test]
+    fn div_assign_point() {
+        let mut pt = Point::new(1, 2);
+        pt /= Point::new(1, 2);
+        assert_eq!(1, pt.x);
+        assert_eq!(1, pt.y);
+    }
+
+    #[test]
+    fn div_assign_f32() {
+        let mut pt = Point::new(1, 2);
+        pt /= 3.0;
+        assert_eq!(0, pt.x);
+        assert_eq!(1, pt.y);
+    }
+
+    #[test]
+    fn div_point() {
+        let pt = Point::new(1, 2);
+        let pt2 = pt / Point::new(1, 2);
+        assert_eq!(1, pt2.x);
+        assert_eq!(1, pt2.y);
     }
 }

@@ -36,20 +36,20 @@ impl TryFrom<Direction> for TwoDimDirection {
 
 #[cfg(test)]
 mod tests {
-    use std::convert::{TryFrom, TryInto};
+    use std::convert::TryFrom;
 
     use super::{ConvertError, Direction, TwoDimDirection};
 
     #[test]
     fn south_east_to_two_dim() {
-        let dir: TwoDimDirection = Direction::SouthEast.try_into().unwrap();
-        assert!(matches!(dir, TwoDimDirection::East));
+        let dir = TwoDimDirection::try_from(Direction::SouthEast);
+        assert!(matches!(dir, Ok(TwoDimDirection::East)));
     }
 
     #[test]
     fn west_to_two_dim() {
-        let dir: TwoDimDirection = Direction::West.try_into().unwrap();
-        assert!(matches!(dir, TwoDimDirection::West));
+        let dir = TwoDimDirection::try_from(Direction::West);
+        assert!(matches!(dir, Ok(TwoDimDirection::West)));
     }
 
     #[test]
