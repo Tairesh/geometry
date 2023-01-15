@@ -77,6 +77,17 @@ impl Direction {
     pub fn is_here(self) -> bool {
         self == Direction::Here
     }
+
+    #[must_use]
+    pub fn is_diagonal(self) -> bool {
+        matches!(
+            self,
+            Direction::NorthEast
+                | Direction::SouthEast
+                | Direction::SouthWest
+                | Direction::NorthWest
+        )
+    }
 }
 
 impl From<(i32, i32)> for Direction {
