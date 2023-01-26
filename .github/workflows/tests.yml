@@ -4,13 +4,17 @@ on:
   push:
     paths:
       - '**/*.rs'
+      - 'Cargo.lock'
       - 'Cargo.toml'
+      - '.github/workflows/tests.yml'
     branches:
       - main
   pull_request:
     paths:
       - '**/*.rs'
+      - 'Cargo.lock'
       - 'Cargo.toml'
+      - '.github/workflows/tests.yml'
   workflow_dispatch:
 
 env:
@@ -21,12 +25,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
       - name: "Install Rust toolchain"
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
           profile: minimal
           toolchain: stable
           components: clippy
+          override: true
+
+      - name: "Fmt check"
+        run: cargo fmt --all -- --check
+
       - name: "Run tests"
-        run: make check
+        run: cargo test --all
+
+      - name: "Run clippy"
+        run: cargo clippy -- -D warnings -D clippy::pedantic --verbose --no-deps
