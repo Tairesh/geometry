@@ -63,6 +63,14 @@ impl Point {
     pub fn distance(self, other: Self) -> f64 {
         f64::sqrt(f64::from(self.square_distance(other)))
     }
+
+    #[must_use]
+    /// Points between self and other
+    pub fn line_to(self, other: Point) -> Vec<Point> {
+        line_drawing::Bresenham::new(self.into(), other.into())
+            .map(Self::from)
+            .collect()
+    }
 }
 
 impl Default for Point {
@@ -413,6 +421,12 @@ impl Neg for Point {
     }
 }
 
+impl PartialEq<(i32, i32)> for Point {
+    fn eq(&self, other: &(i32, i32)) -> bool {
+        self.x == other.0 && self.y == other.1
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::{Direction, Point, Vec2};
@@ -511,5 +525,15 @@ mod tests {
         let pt2 = pt / Point::new(1, 2);
         assert_eq!(1, pt2.x);
         assert_eq!(1, pt2.y);
+    }
+
+    #[test]
+    fn test_line() {
+        let pt = Point::new(0, 0);
+        let pt2 = Point::new(5, 5);
+        assert_eq!(
+            pt.line_to(pt2),
+            [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+        )
     }
 }

@@ -1,3 +1,5 @@
+use super::Point;
+
 #[rustfmt::skip]
 pub const CIRCLE13: [(i32, i32); 137] = [
                                             (-2, -6), (-1, -6), (0, -6), (1, -6), (2, -6),
@@ -62,3 +64,10 @@ pub const CIRCLE5: [(i32, i32); 21] = [
     (-2,  1), (-1,  1), (0,  1), (1,  1), (2,  1),
               (-1,  2), (0,  2), (1,  2),
 ];
+
+/// Returns a list of points that are on the circle with the given center and radius.
+pub fn circle(center: Point, radius: i32) -> Vec<Point> {
+    line_drawing::BresenhamCircle::new(center.x, center.y, radius)
+        .map(Point::from)
+        .collect()
+}

@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 vek = { version = "0.15" }
+line_drawing = { version = "1.0" }
 rand = { version = "0.8", optional = true }
 serde = { version = "1.0", optional = true }
 
