@@ -9,6 +9,13 @@ pub enum TwoDimDirection {
     West,
 }
 
+impl TwoDimDirection {
+    #[must_use]
+    pub fn is_default(self) -> bool {
+        self == Self::default()
+    }
+}
+
 impl Default for TwoDimDirection {
     fn default() -> Self {
         Self::East

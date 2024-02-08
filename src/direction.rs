@@ -39,6 +39,13 @@ pub enum Direction {
     NorthWest,
 }
 
+impl Direction {
+    #[must_use]
+    pub fn is_default(self) -> bool {
+        self == Self::default()
+    }
+}
+
 impl Default for Direction {
     fn default() -> Self {
         Self::East
