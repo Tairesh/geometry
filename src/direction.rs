@@ -39,6 +39,12 @@ pub enum Direction {
     NorthWest,
 }
 
+impl Default for Direction {
+    fn default() -> Self {
+        Self::East
+    }
+}
+
 impl Direction {
     #[must_use]
     pub fn from_delta(dx: i32, dy: i32) -> Self {

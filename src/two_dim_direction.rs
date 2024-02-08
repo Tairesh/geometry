@@ -9,6 +9,12 @@ pub enum TwoDimDirection {
     West,
 }
 
+impl Default for TwoDimDirection {
+    fn default() -> Self {
+        Self::East
+    }
+}
+
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum ConvertError {
     North,
