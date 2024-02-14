@@ -4,6 +4,7 @@ pub use two_dim_direction::{ConvertError, TwoDimDirection};
 
 pub mod circles;
 mod direction;
+pub mod fov;
 mod point;
 mod two_dim_direction;
 
