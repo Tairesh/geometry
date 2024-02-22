@@ -53,6 +53,25 @@ impl Default for Direction {
 }
 
 impl Direction {
+    #[cfg(feature = "rand")]
+    pub fn random<R: rand::Rng + ?Sized>(
+        rng: &mut R,
+        include_here: bool,
+    ) -> Self {
+        match rng.gen_range(0..=if include_here { 8 } else { 7 }) {
+            0 => Direction::East,
+            1 => Direction::SouthEast,
+            2 => Direction::South,
+            3 => Direction::SouthWest,
+            4 => Direction::West,
+            5 => Direction::NorthWest,
+            6 => Direction::North,
+            7 => Direction::NorthEast,
+            8 => Direction::Here,
+            _ => unreachable!(),
+        }
+    }
+
     #[must_use]
     pub fn from_delta(dx: i32, dy: i32) -> Self {
         match (dx.cmp(&0), dy.cmp(&0)) {
