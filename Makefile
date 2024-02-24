@@ -2,7 +2,7 @@ export RUST_BACKTRACE=1
 export CARGO_TERM_COLOR=always
 
 default: build
-before-commit: fmt check
+before-commit: fmt update check
 check: fmt-check test clippy
 
 build:
@@ -22,3 +22,6 @@ clippy:
 
 clean:
 	cargo clean
+
+update:
+	cargo update

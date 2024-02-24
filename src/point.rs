@@ -5,6 +5,7 @@ use super::{Direction, Vec2};
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+/// Helper struct defining a 2D point in space.
 pub struct Point {
     pub x: i32,
     pub y: i32,
@@ -12,11 +13,28 @@ pub struct Point {
 
 impl Point {
     #[must_use]
+    /// Create a new point from i32
     pub const fn new(x: i32, y: i32) -> Self {
         Point { x, y }
     }
 
+    #[inline]
+    #[must_use]
+    /// Try to create a new point from `TryInto<i32>`
+    pub fn try_new<T>(x: T, y: T) -> Point
+    where
+        T: TryInto<i32>,
+    {
+        Point {
+            x: x.try_into().ok().unwrap_or(0),
+            y: y.try_into().ok().unwrap_or(0),
+        }
+    }
+
     #[cfg(feature = "rand")]
+    #[inline]
+    #[must_use]
+    /// Create a random point within a range
     pub fn random<R: rand::Rng + ?Sized>(
         rng: &mut R,
         horizontal: std::ops::Range<i32>,
@@ -25,6 +43,7 @@ impl Point {
         Self::new(rng.gen_range(horizontal), rng.gen_range(vertical))
     }
 
+    #[inline]
     #[must_use]
     #[allow(clippy::cast_sign_loss)]
     /// Helper for map index conversion
@@ -36,6 +55,7 @@ impl Point {
         }
     }
 
+    #[inline]
     #[must_use]
     #[allow(clippy::cast_possible_truncation)]
     #[allow(clippy::cast_possible_wrap)]
@@ -46,22 +66,25 @@ impl Point {
 
     #[must_use]
     /// Direction to other point
-    pub fn dir_to(self, other: Point) -> Direction {
+    pub fn direction_to(self, other: Point) -> Direction {
         Direction::from(other - self)
     }
 
+    #[inline]
     #[must_use]
     /// Square distance to other point
-    pub fn square_distance(self, other: Self) -> u32 {
+    pub fn square_distance_to(self, other: Self) -> u32 {
         let dx = self.x.abs_diff(other.x);
         let dy = self.y.abs_diff(other.y);
         dx * dx + dy * dy
     }
 
+    #[inline]
     #[must_use]
+    #[allow(clippy::cast_precision_loss)]
     /// Distance (pythagorean) to other point
-    pub fn distance(self, other: Self) -> f64 {
-        f64::sqrt(f64::from(self.square_distance(other)))
+    pub fn distance_to(self, other: Self) -> f32 {
+        (self.square_distance_to(other) as f32).sqrt()
     }
 
     #[must_use]
@@ -74,16 +97,20 @@ impl Point {
 }
 
 impl Default for Point {
+    /// Create a zero point
     fn default() -> Self {
         Self::zero()
     }
 }
 
 impl Zero for Point {
+    /// Create a zero point
+    #[inline]
     fn zero() -> Self {
         Self::new(0, 0)
     }
 
+    /// Check if point is zero
     fn is_zero(&self) -> bool {
         self == &Self::zero()
     }
@@ -472,9 +499,9 @@ mod tests {
     #[test]
     fn test_dist() {
         let pt = Point::new(1, 2);
-        let pt2 = Point::new(3, 4);
-        assert_eq!(8, pt.square_distance(pt2));
-        assert!(f64::abs(pt.distance(pt2) - 2.828_427_124_746_190_3) < f64::EPSILON);
+        let pt2 = Point::new(4, 6);
+        assert_eq!(25, pt.square_distance_to(pt2));
+        assert!(f32::abs(pt.distance_to(pt2) - 5.0) < f32::EPSILON);
     }
 
     #[test]
