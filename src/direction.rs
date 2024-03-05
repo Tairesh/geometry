@@ -44,6 +44,16 @@ impl Direction {
     pub fn is_default(self) -> bool {
         self == Self::default()
     }
+    
+    #[must_use]
+    pub fn all() -> [Direction; 8] {
+        DIR8
+    }
+    
+    #[must_use]
+    pub fn all_with_here() -> [Direction; 9] {
+        DIR9
+    }
 }
 
 impl Default for Direction {
