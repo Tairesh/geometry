@@ -3,6 +3,7 @@ pub use point::Point;
 pub use two_dim_direction::{ConvertError, TwoDimDirection};
 
 pub mod circles;
+pub mod cp437;
 mod direction;
 mod point;
 mod two_dim_direction;
