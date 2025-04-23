@@ -40,7 +40,10 @@ impl Point {
         horizontal: std::ops::Range<i32>,
         vertical: std::ops::Range<i32>,
     ) -> Self {
-        Self::new(rng.gen_range(horizontal), rng.gen_range(vertical))
+        let x = rng.random_range(horizontal);
+        let y = rng.random_range(vertical);
+
+        Self::new(x, y)
     }
 
     #[inline]

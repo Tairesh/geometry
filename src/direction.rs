@@ -65,7 +65,7 @@ impl Default for Direction {
 impl Direction {
     #[cfg(feature = "rand")]
     pub fn random<R: rand::Rng + ?Sized>(rng: &mut R, include_here: bool) -> Self {
-        match rng.gen_range(0..=if include_here { 8 } else { 7 }) {
+        match rng.random_range(0..=if include_here { 8 } else { 7 }) {
             0 => Direction::East,
             1 => Direction::SouthEast,
             2 => Direction::South,
