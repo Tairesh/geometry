@@ -6,6 +6,8 @@
 
 A Rust library for 2D geometric calculations. This library provides types and functions for working with points, directions, circles, lines, and basic vector operations. It aims to be a simple and efficient tool for geometry-related tasks in Rust projects.
 
+It's mainly made for my roguelikes, like [Followers Of The Midia](https://github.com/Tairesh/midia) and [Space Age](https://github.com/Tairesh/SpaceAge)
+
 ## Features
 
 *   **Point (`Point`)**: Represents a 2D point with `i32` coordinates.
@@ -124,4 +126,4 @@ Please ensure your code is well-documented and includes tests where appropriate.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). <!-- Ensure a LICENSE file exists at the root -->
+This project is licensed under the [MIT License](LICENSE).
