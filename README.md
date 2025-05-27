@@ -15,7 +15,7 @@ A Rust library for 2D geometric calculations. This library provides types and fu
     *   Line drawing to another `Point` using Bresenham's line algorithm.
     *   Conversion to and from map/grid indices.
 *   **Direction (`Direction`, `DIR8`, `DIR9`)**: Represents cardinal and intercardinal directions (e.g., North, NorthWest). Useful for grid-based movements.
-*   **2D Direction (`TwoDimDirection`)**: A more detailed representation of 2D direction, potentially with conversion error handling.
+*   **2D Direction (`TwoDimDirection`)**: Represents horizontal-only directions (East or West), useful in specific 2D contexts. It includes error handling for conversions from the more general `Direction` type (which can represent vertical or diagonal movements).
 *   **Circles**:
     *   Generate points for a circle outline using `circles::circle(center: Point, radius: i32)`.
     *   Pre-defined constant arrays of points for circles of various radii (e.g., `CIRCLE5`, `CIRCLE7`, `CIRCLE9`, `CIRCLE11`, `CIRCLE13`).
@@ -57,7 +57,7 @@ fn main() {
 
     // Using a pre-defined circle
     let predefined_circle_points = circles::CIRCLE5;
-    println!("Predefined CIRCLE5 points (first 3): {:?}", &predefined_circle_points[0..3]);
+    println!("Predefined CIRCLE5 points (first 3): {:?}", &predefined_circle_points[0..3]); // Example output: [(-1, -2), (0, -2), (1, -2)]
 }
 ```
 
@@ -124,4 +124,4 @@ Please ensure your code is well-documented and includes tests where appropriate.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE). <!-- Ensure a LICENSE file exists at the root -->
