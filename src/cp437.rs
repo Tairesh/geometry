@@ -272,6 +272,7 @@ pub fn to_byte(c: char) -> u8 {
         'ⁿ' => 252,
         '²' => 253,
         '■' => 254,
+        '\u{a0}' => 255,
 
         _ => 0,
     }
@@ -279,8 +280,11 @@ pub fn to_byte(c: char) -> u8 {
 
 #[must_use]
 #[allow(clippy::too_many_lines)]
+/// Converts a CP437 byte to its Unicode character equivalent.
+/// All 256 byte values are mapped to a Unicode character.
 pub fn to_char(c: u8) -> char {
     match c {
+        0 => '\0',
         1 => '☺',
         2 => '☻',
         3 => '♥',
@@ -550,6 +554,7 @@ pub fn to_char(c: u8) -> char {
         252 => 'ⁿ',
         253 => '²',
         254 => '■',
+        255 => '\u{a0}',
 
         _ => ' ',
     }
@@ -594,6 +599,13 @@ mod tests {
         ];
         for (ch, i) in test.into_iter().zip(test2.into_iter()) {
             assert_eq!(to_char(ch), i);
+        }
+    }
+
+    #[test]
+    fn roundtrip_all() {
+        for b in 0u8..=255 {
+            assert_eq!(super::to_byte(super::to_char(b)), b);
         }
     }
 }
