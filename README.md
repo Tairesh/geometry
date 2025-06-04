@@ -12,7 +12,7 @@ It's mainly made for my roguelikes, like [Followers Of The Midia](https://github
 
 *   **Point (`Point`)**: Represents a 2D point with `i32` coordinates.
     *   Creation from `(i32, i32)` tuples or `vek::Vec2<f32>`.
-    *   Arithmetic operations: addition, subtraction, multiplication, division with scalars, `Point`s, or `vek::Vec2`.
+    *   Arithmetic operations: addition and subtraction with `(i32, i32)` tuples or other `Point` types, and multiplication/division with scalar values or `vek::Vec2`.
     *   Distance calculations (Euclidean and squared distance).
     *   Line drawing to another `Point` using Bresenham's line algorithm.
     *   Conversion to and from map/grid indices.
