@@ -3,7 +3,6 @@
 /// Converts a unicode character to a CP437 equivalent, returning 0 if it didn't have a match
 pub fn to_byte(c: char) -> u8 {
     match c {
-        '\0' => 0,
         '☺' => 1,
         '☻' => 2,
         '♥' => 3,
