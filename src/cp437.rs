@@ -280,6 +280,8 @@ pub fn to_byte(c: char) -> u8 {
 
 #[must_use]
 #[allow(clippy::too_many_lines)]
+/// Converts a CP437 byte to its Unicode character equivalent.
+/// All 256 byte values are explicitly mapped.
 pub fn to_char(c: u8) -> char {
     match c {
         0 => '\0',
