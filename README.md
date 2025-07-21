@@ -1,8 +1,8 @@
-# Geometry Library
+# Rougemetry — Geometry Library For Roguelikes
 
-[![Tests](https://github.com/Tairesh/geometry/actions/workflows/tests.yml/badge.svg)](https://github.com/Tairesh/geometry/actions/workflows/tests.yml)
-[![Commit activity](https://img.shields.io/github/commit-activity/m/tairesh/geometry)](https://github.com/Tairesh/geometry/commits/main)
-[![Lines of code](https://tokei.rs/b1/github/Tairesh/geometry?category=code)](https://github.com/Tairesh/geometry/tree/main)
+[![Tests](https://github.com/Tairesh/roguemetry/actions/workflows/tests.yml/badge.svg)](https://github.com/Tairesh/roguemetry/actions/workflows/tests.yml)
+[![Commit activity](https://img.shields.io/github/commit-activity/m/tairesh/roguemetry)](https://github.com/Tairesh/roguemetry/commits/main)
+[![Lines of code](https://tokei.rs/b1/github/Tairesh/roguemetry?category=code)](https://github.com/Tairesh/roguemetry/tree/main)
 
 A Rust library for 2D geometric calculations. This library provides types and functions for working with points, directions, circles, lines, and basic vector operations. It aims to be a simple and efficient tool for geometry-related tasks in Rust projects.
 
@@ -28,10 +28,10 @@ It's mainly made for my roguelikes, like [Followers Of The Midia](https://github
 
 ## Usage
 
-Here are a few examples of how to use the `geometry` library:
+Here are a few examples of how to use the `roguemetry` library:
 
 ```rust
-use geometry::{Point, Direction, circles};
+use roguemetry::{Point, Direction, circles};
 
 fn main() {
     // Create points
@@ -65,7 +65,7 @@ fn main() {
 
 ## Feature Flags
 
-The `geometry` library uses feature flags to enable optional functionalities:
+The `roguemetry` library uses feature flags to enable optional functionalities:
 
 *   **`rand`**: Enables features that depend on the `rand` crate.
     *   Currently, this includes `Point::random()` for generating points with random coordinates.
@@ -78,7 +78,7 @@ The `geometry` library uses feature flags to enable optional functionalities:
 You can customize the included features by modifying the dependency in your `Cargo.toml`:
 
 ```toml
-[dependencies.geometry]
+[dependencies.roguemetry]
 version = "0.1.0" # Replace with the desired version
 default-features = false
 features = ["serde"] # Example: only enable serde
@@ -86,11 +86,11 @@ features = ["serde"] # Example: only enable serde
 
 ## Installation
 
-To use the `geometry` library in your Rust project, add the following to your `Cargo.toml` file:
+To use the `roguemetry` library in your Rust project, add the following to your `Cargo.toml` file:
 
 ```toml
 [dependencies]
-geometry = "0.1.0" # Replace with the latest version if different
+roguemetry = "0.1.0" # Replace with the latest version if different
 ```
 
 Then, run `cargo build` or `cargo run` to download and compile the dependency.
@@ -127,3 +127,4 @@ Please ensure your code is well-documented and includes tests where appropriate.
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
