@@ -1,6 +1,7 @@
 # Rougemetry — Geometry Library For Roguelikes
 
 [![Tests](https://github.com/Tairesh/roguemetry/actions/workflows/tests.yml/badge.svg)](https://github.com/Tairesh/roguemetry/actions/workflows/tests.yml)
+[![Crates.io](https://img.shields.io/crates/v/roguemetry.svg)](https://crates.io/crates/roguemetry)
 [![Commit activity](https://img.shields.io/github/commit-activity/m/tairesh/roguemetry)](https://github.com/Tairesh/roguemetry/commits/main)
 [![Lines of code](https://tokei.rs/b1/github/Tairesh/roguemetry?category=code)](https://github.com/Tairesh/roguemetry/tree/main)
 
